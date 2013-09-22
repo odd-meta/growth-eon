@@ -5,6 +5,10 @@ require('game')
 
 function love.load()
 
+
+	window_icon = love.graphics.newImage("assets/ico_clean_32.png" )
+	success = love.graphics.setIcon( window_icon )
+
 	-- load in our game image assets
 	img_names = {}
 	images = {}
@@ -15,6 +19,7 @@ function love.load()
 	for i, image in pairs(images) do
 		image:setFilter("nearest", "nearest")
 	end
+
 
 
 	-- load in our game music assets
