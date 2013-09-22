@@ -35,10 +35,21 @@ function love.load()
 		music:setLooping(true)
 	end
 	
+	
+	-- load in our game sound assets
+	sound_names = {"ding.wav"}
+
+	sounds = {}
+
+	for i, name in ipairs(sound_names) do
+		sounds[name] = love.audio.newSource( "assets/sound/" .. name , "static")
+	end
+
 	--shoot = love.audio.newSource( "assets/shoot.ogg", "static" )
 
 	-- setup our game font objects
 	title_font = love.graphics.newFont( "assets/fonts/telavision.ttf", 82*scale )
+	menu_font = love.graphics.newFont( "assets/fonts/telavision.ttf", 32*scale )
 
 
 	
