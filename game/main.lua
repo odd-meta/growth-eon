@@ -4,7 +4,9 @@ require('game')
 
 
 function love.load()
-	img_names = {"bullet", "enemy", "player", "title", "background"}
+
+	-- load in our game image assets
+	img_names = {}
 	images = {}
 	for i, name in ipairs(img_names) do
 		images[name] = love.graphics.newImage("assets/" .. name .. ".gif" )
@@ -14,6 +16,8 @@ function love.load()
 		image:setFilter("nearest", "nearest")
 	end
 
+
+	-- load in our game music assets
 	music_names = {"yd - MyVeryOwnDeadShip"}
 
 	musics = {}
@@ -26,10 +30,13 @@ function love.load()
 		music:setLooping(true)
 	end
 	
-	shoot = love.audio.newSource( "assets/shoot.ogg", "static" )
+	--shoot = love.audio.newSource( "assets/shoot.ogg", "static" )
 
+	-- setup our game font objects
 	title_font = love.graphics.newFont( "assets/fonts/telavision.ttf", 82*scale )
-	love.graphics.setFont(title_font)
+
+
+	
 
 	bgc = { r=220, g=224, b=230 }
 

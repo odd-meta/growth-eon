@@ -11,7 +11,7 @@ function splash.load()
 end
 
 function splash.draw()
-
+	love.graphics.setFont(title_font)
 	love.graphics.setColor( fontcolor.r, fontcolor.g, fontcolor.b )
 	if splash.dt_temp == 2.5 then
 		love.graphics.printf("Growth Eon", 
@@ -19,7 +19,7 @@ function splash.draw()
 	end
 
 	love.graphics.setColor( 255,255,255 )
-		
+
 end
 
 function splash.update(dt)
@@ -32,6 +32,8 @@ end
 
 
 function splash.keypressed(key)
-	state = "game"
-	game.load()
+	
+	if key == "up" then
+		
+	end
 end
