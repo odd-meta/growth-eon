@@ -1,5 +1,9 @@
 scale = 1
 
+function round(num, idp)
+  return tonumber(string.format("%." .. (idp or 0) .. "f", num))
+end
+
 
 function love.conf(t)
     t.modules.joystick = true   -- Enable the joystick module (boolean)

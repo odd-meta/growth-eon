@@ -83,7 +83,7 @@ function splash.draw()
 		0,0,love.graphics.getWidth(), love.graphics.getHeight() )
 	love.graphics.setColor( 255, 255, 255 )
 
-	if splash.dt_temp > 2.1 then
+	if splash.dt_temp > 4.9 then
 
 		love.graphics.setFont(title_font)
 		love.graphics.setColor( fontcolor.r, fontcolor.g, fontcolor.b )
@@ -92,7 +92,7 @@ function splash.draw()
 	end
 
 	love.graphics.setColor( 255,255,255 )
-	if splash.dt_temp > 4.9 then
+	if splash.dt_temp > 2.1 then
 		splash.draw_menu(splash.menu, splash.menu_selected, splash.menu_sel_color)
 	end
 
@@ -105,7 +105,7 @@ end
 
 
 function splash.keypressed(key)
-	if splash.dt_temp > 4.5 then
+	if splash.dt_temp > 2.1 then
 		if key == "up" or key == "down" then
 			splash.menu_selected = splash.change_menu_selected(splash.menu, splash.menu_selected, key, splash.menu_sel_sound)
 		elseif key == "return" or key == " " then
