@@ -7,6 +7,20 @@ function splash.load()
 	love.audio.play(musics["yd - MyVeryOwnDeadShip"])
 	splash.dt_temp = 0
 	splash.menu = { "play", "quit" }
+	local function play_action() 
+		state = "play"
+		play.load()
+	end
+	local function quit_action()
+		love.event.quit()
+	end
+
+	splash.menu_actions = {
+		["play"] = play_action,
+		["quit"] = quit_action
+
+	}
+
 	splash.menu_selected = 1
 	splash.menu_sel_color = {r=43, g=76, b=126}
 	splash.menu_sel_sound = sounds["ding.wav"]
@@ -29,7 +43,10 @@ function splash.draw_menu(menu, selected, sel_color)
 	end
 		
 	love.graphics.setColor( 255,255,255 )
+end
 
+function splash.perform_menu_action(menu, selected, actions)
+	actions[ menu[selected] ]()
 
 end
 
@@ -59,32 +76,43 @@ end
 
 
 function splash.draw()
-	love.graphics.setFont(title_font)
-	love.graphics.setColor( fontcolor.r, fontcolor.g, fontcolor.b )
-	if splash.dt_temp == 2.5 then
+
+	love.graphics.setColor( bgc.r, bgc.g, bgc.b )
+
+	love.graphics.rectangle( "fill",
+		0,0,love.graphics.getWidth(), love.graphics.getHeight() )
+	love.graphics.setColor( 255, 255, 255 )
+
+	if splash.dt_temp > 2.1 then
+
+		love.graphics.setFont(title_font)
+		love.graphics.setColor( fontcolor.r, fontcolor.g, fontcolor.b )
 		love.graphics.printf("Growth Eon", 
 			150, 600*scale, love.graphics.getWidth(), "center")
 	end
 
 	love.graphics.setColor( 255,255,255 )
-
-	splash.draw_menu(splash.menu, splash.menu_selected, splash.menu_sel_color)
+	if splash.dt_temp > 4.9 then
+		splash.draw_menu(splash.menu, splash.menu_selected, splash.menu_sel_color)
+	end
 
 end
 
 function splash.update(dt)
 	splash.dt_temp = splash.dt_temp + dt
 
-	if splash.dt_temp > 2.5 then
-		splash.dt_temp = 2.5
-	end
 end
 
 
 function splash.keypressed(key)
-
-	if key == "up" or key == "down" then
-		splash.menu_selected = splash.change_menu_selected(splash.menu, splash.menu_selected, key, splash.menu_sel_sound)
+	if splash.dt_temp > 4.5 then
+		if key == "up" or key == "down" then
+			splash.menu_selected = splash.change_menu_selected(splash.menu, splash.menu_selected, key, splash.menu_sel_sound)
+		elseif key == "return" or key == " " then
+			splash.perform_menu_action(splash.menu, splash.menu_selected, splash.menu_actions)
+		end
 	end
+
+
 
 end

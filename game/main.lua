@@ -1,9 +1,13 @@
 debug = false
 require('splash')
-require('game')
+require('play')
+
+octree = require('octree')
+environment = require('environment') 
 
 
 function love.load()
+
 
 
 	window_icon = love.graphics.newImage("assets/ico_clean_32.png" )
@@ -58,6 +62,7 @@ function love.load()
 
 	fontcolor = { r=31, g=31, b=32 }
 
+
 	state = "splash"
 
 	splash.load()
@@ -67,16 +72,12 @@ end
 
 
 function love.draw()
-	love.graphics.setColor( bgc.r, bgc.g, bgc.b )
 
-	love.graphics.rectangle( "fill",
-		0,0,love.graphics.getWidth(), love.graphics.getHeight() )
-	love.graphics.setColor( 255, 255, 255 )
 
 	if state == "splash" then
 		splash.draw()
-	elseif state == "game" then
-		game.draw()
+	elseif state == "play" then
+		play.draw()
 	end
 
 
@@ -85,8 +86,8 @@ end
 function love.update(dt)
 	if state == "splash" then
 		splash.update(dt)
-	elseif state == "game" then
-		game.update(dt)
+	elseif state == "play" then
+		play.update(dt)
 	end
 
 end
@@ -100,8 +101,8 @@ function love.keypressed(key)
 
 	if state == "splash" then
 		splash.keypressed(key)
-	elseif state == "game" then
-		game.keypressed(key)
+	elseif state == "play" then
+		play.keypressed(key)
 	end
 
 end

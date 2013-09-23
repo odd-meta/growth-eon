@@ -1,4 +1,5 @@
-
+# Specifications
+Raw game notes and specifications.
 
 # Asthetics
 
