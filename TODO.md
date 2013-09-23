@@ -1,11 +1,9 @@
 Wrap up states into an eaiser system to manage when adding new states
 
 
-make menu buttons actually do something
+figure out how to display the environment
 
-create a basic skeleton for the game state
+figure out a workable way to generate a terrain-realistic random environment
 
-define the datastructure for storing the world
 store the position of all agents
 
-still have to store the properties of the environment in some way octree?

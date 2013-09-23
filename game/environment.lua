@@ -23,6 +23,9 @@ end
 
 function ENVIRON:addrandom(position)
 
+    local x = position.x
+    local y = position.y
+
     local height = math.random()
     local composition = {
         ["soil"] = 0.8,
@@ -35,10 +38,10 @@ function ENVIRON:addrandom(position)
         ["humidity"] = humidity
     }
 
-    local x = position.x
-    local y = position.y
+
     local env_data = { ["height"] = height, ["composition"] = composition, ["properties"] = properties }
     --print("adding: "..x..","..y.." with height "..height)
+
     self.tree:set(x,y,0,env_data)
 
 
