@@ -11,6 +11,8 @@ function new( environ, width )
     overcam._ratio = love.graphics.getWidth()/love.graphics.getHeight()
     overcam._height = overcam._width / overcam._ratio
     
+    overcam._zoom_speed = 0.5
+
     setmetatable( overcam, OVERCAM )
     overcam:init()
 
@@ -31,7 +33,7 @@ function OVERCAM:init()
     self._environ_x_center = math.ceil(self._environ.max_x / 2 )
     self._environ_y_center = math.ceil(self._environ.max_y / 2 )
 
-    self._position = { x = self._environ_x_center + .9, y = self._environ_y_center+.3 }
+    self._position = { x = self._environ_x_center, y = self._environ_y_center }
 
     self._bound = {}
     self._bound.left = math.floor(self._position.x) - math.ceil(self._width) / 2
@@ -103,7 +105,84 @@ function OVERCAM:draw_view()
 
     end
 
-    
+
+end
+
+function OVERCAM:update_width(width)
+    self._width = width
+    self._height = self._width / self._ratio
+
+    self._bound.left = math.floor(self._position.x) - math.ceil(self._width) / 2
+    self._bound.right = math.ceil(self._position.x) + math.ceil(self._width) / 2
+    self._bound.top = math.ceil(self._position.y) + math.ceil(self._height) / 2
+    self._bound.bottom = math.floor(self._position.y) - math.ceil(self._height) / 2
+
+    self._cell_wh = love.graphics.getWidth() / self._width
+
+    --calulate the ratio of pixels to one unit of environment grid (environment to screen ratio)
+    self._es_ratio = self._cell_wh
+
+end
+
+
+function OVERCAM:zoom_out()
+
+    local new_width = self._width + self._zoom_speed
+    self:update_width(new_width)
+
+end
+
+function OVERCAM:zoom_in()
+    local new_width = self._width - self._zoom_speed
+    self:update_width(new_width)
+
+end
+
+
+
+function OVERCAM:update_position(dt)
+
+
+    if love.keyboard.isDown("right") then
+        --print("going right")
+        if ( self._position.x + ( self._width / 2 ) ) > self._environ.max_x  then
+            self._position.x = ( self._environ.max_x - ( self._width / 2 ) )
+        else
+            self._position.x = self._position.x + 10 * dt
+        end
+    end
+
+    if love.keyboard.isDown("left") then
+        --print("going right")
+        if ( self._position.x - ( self._width / 2 ) ) < 0  then
+            self._position.x = ( 0 + ( self._width / 2 ) )
+        else
+            self._position.x = self._position.x - 10 * dt
+        end
+    end
+
+    if love.keyboard.isDown("up") then
+        --print("going right")
+        if ( self._position.y - ( self._height / 2 ) ) < 0  then
+            self._position.y = ( 0 + ( self._height / 2 ) )
+        else
+            self._position.y = self._position.y - 10 * dt
+        end
+    end
+
+    if love.keyboard.isDown("down") then
+        --print("going right")
+        if ( self._position.y + ( self._height / 2 ) ) > self._environ.max_y  then
+            self._position.y = ( self._environ.max_y - ( self._height / 2 ) )
+        else
+            self._position.y = self._position.y + 10 * dt
+        end
+    end
+
+    self._bound.left = math.floor(self._position.x) - math.ceil(self._width) / 2
+    self._bound.right = math.ceil(self._position.x) + math.ceil(self._width) / 2
+    self._bound.top = math.ceil(self._position.y) + math.ceil(self._height) / 2
+    self._bound.bottom = math.floor(self._position.y) - math.ceil(self._height) / 2
 
 
 end

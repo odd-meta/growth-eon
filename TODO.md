@@ -3,7 +3,6 @@ Wrap up states into an eaiser system to manage when adding new states
 
 create a consolidated area for notifications
 
-figure out how to display the environment
 
 figure out a workable way to generate a terrain-realistic random environment
 

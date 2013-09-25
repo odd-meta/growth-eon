@@ -3,7 +3,6 @@ require('splash')
 require('play')
 
 
-environment = require('environment') 
 
 
 
@@ -11,7 +10,7 @@ environment = require('environment')
 
 
 function love.load()
-
+	print( string.format("npot support: %s", tostring(love.graphics.isSupported("npot") ) ) )
 
 
 	window_icon = love.graphics.newImage("assets/ico_clean_32.png" )
