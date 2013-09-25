@@ -34,6 +34,17 @@ function ENVIRON:clear()
     print("environment cleared")
 end
 
+function ENVIRON:get(x, y)
+    local data_func = self.tree:get(x, y, 0)
+    if data_func ~= nil then
+        local data = data_func()
+        return data
+    else
+        return nil
+    end
+
+end
+
 
 function ENVIRON:addrandom(position)
 
@@ -53,10 +64,13 @@ function ENVIRON:addrandom(position)
     }
 
 
-    local env_data = { ["height"] = height, ["composition"] = composition, ["properties"] = properties }
+    local env_data = function() return { ["height"] = height, ["composition"] = composition, ["properties"] = properties } end
     --print("adding: "..x..","..y.." with height "..height)
 
     self.tree:set(x,y,0,env_data)
+    --local test_ret = self.tree:get(x,y,0)
+
+    --print( string.format("h: %s", test_ret.height) )
 
 
 end
@@ -78,7 +92,7 @@ function ENVIRON:randomize(size)
             }
 
 
-            local env_data = { ["height"] = height, ["composition"] = composition, ["properties"] = properties }
+            local env_data = function() return { ["height"] = height, ["composition"] = composition, ["properties"] = properties } end
             print("adding: "..x..","..y.." with height "..height)
             self.tree:set(x,y,0,env_data)
 

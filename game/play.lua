@@ -7,14 +7,18 @@ local environment = require('environment')
 function play.load()
     love.audio.stop()
 
-    play.environ = environment.new(50,50)
-    play.overcam = overcam.new(play.environ, 10)
+    play.environ = environment.new(200,200)
+    play.overcam = overcam.new(play.environ, 20)
 
     play.bgc = { r = 43, g = 76, b = 126 }
 
 end
 
 function play.draw()
+
+    
+
+
     if play.environ._building == true then
 
         local percent_done = round( ( play.environ._build_counter / ( play.environ.max_x * play.environ.max_y  ) ) * 100 , 0)
@@ -22,6 +26,10 @@ function play.draw()
         love.graphics.setColor( play.bgc.r, play.bgc.g, play.bgc.b )
         love.graphics.printf(percent_done .. " % done building environment", 
             -120, 600*scale, love.graphics.getWidth(), "right")
+        love.graphics.setColor( 255,255,255 )
+    end
+    if play.environ._building == false then
+        play.overcam:draw_view()
     end
 end
 
