@@ -1,6 +1,24 @@
 # Specifications
 Raw game notes and specifications.
 
+
+http://www.colourlovers.com/palette/151113/blue_jay_feather
+
+three color black
+31,31,32
+
+blue jay blue
+43,76,126
+
+blue jay accent
+86,126,187
+
+blue jay gray
+96,109,128
+
+blue jay white
+220,224,230
+
 # Asthetics
 
 These are the final goals of how the game should feel to play, the emotions it should invoke in the player, and the senses it should incite during interaction.

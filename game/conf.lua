@@ -24,6 +24,6 @@ function love.conf(t)
     t.screen.fullscreen = false -- Enable fullscreen (boolean)
     t.screen.vsync = false       -- Enable vertical sync (boolean)
     t.screen.fsaa = 0           -- The number of FSAA-buffers (number)
-    t.screen.height = 800*scale       -- The window height (number)
-    t.screen.width = 1000*scale        -- The window width (number)
+    t.screen.height = 768*scale       -- The window height (number)
+    t.screen.width = 1360*scale        -- The window width (number)
 end

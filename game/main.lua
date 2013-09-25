@@ -2,8 +2,12 @@ debug = false
 require('splash')
 require('play')
 
-octree = require('octree')
+
 environment = require('environment') 
+
+
+
+
 
 
 function love.load()

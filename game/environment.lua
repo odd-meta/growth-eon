@@ -1,14 +1,28 @@
 module(..., package.seeall)
 
+local octree = require('octree')
 
 local ENVIRON = {}
 
+
 ENVIRON.__index = ENVIRON
 
-function new()
+function new(max_x, max_y, build_later)
     tree = octree.new()
 
     local environ = { ["tree"] = tree }
+    environ._cur_build_x = 0
+    environ._cur_build_y = 0
+    environ.max_x = max_x
+    environ.max_y = max_y
+    if build_later == true then
+        environ._building = false
+    else
+        environ._building = true
+    end
+
+
+    environ._build_counter = 0
 
     setmetatable( environ, ENVIRON )
     return environ
