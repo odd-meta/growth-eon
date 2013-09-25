@@ -36,10 +36,9 @@ function OVERCAM:init()
     self._position = { x = self._environ_x_center, y = self._environ_y_center }
 
     self._bound = {}
-    self._bound.left = math.floor(self._position.x) - math.ceil(self._width) / 2
-    self._bound.right = math.ceil(self._position.x) + math.ceil(self._width) / 2
-    self._bound.top = math.ceil(self._position.y) + math.ceil(self._height) / 2
-    self._bound.bottom = math.floor(self._position.y) - math.ceil(self._height) / 2
+
+    self:_calc_bounds()
+
 
     self._offset = {}
     self._offset.x = math.floor(self._position.x) - self._position.x
@@ -60,6 +59,15 @@ function OVERCAM:init()
     print( string.format("position %s, %s bounds of L: %s R: %s T: %s B: %s", self._position.x, self._position.y, self._bound.left, self._bound.right, self._bound.top, self._bound.bottom ) )
 
 end
+
+
+function OVERCAM:_calc_bounds()
+    self._bound.left = self._position.x - self._width / 2
+    self._bound.right = self._position.x + self._width / 2
+    self._bound.top = self._position.y + self._height / 2
+    self._bound.bottom = self._position.y - self._height / 2
+end
+
 
 --takes a cell's coordinates in the environment grid
 function OVERCAM:draw_cell( cell_coords, cell_data )
@@ -97,8 +105,8 @@ function OVERCAM:draw_view()
 
     --print( string.format("position %s, %s bounds of L: %s R: %s T: %s B: %s", self._position.x, self._position.y, self._bound.left, self._bound.right, self._bound.top, self._bound.bottom ) )
 
-    for x = self._bound.left, self._bound.right do
-        for y = self._bound.bottom, self._bound.top do
+    for x = math.floor(self._bound.left), math.ceil(self._bound.right) do
+        for y = math.ceil(self._bound.bottom), math.floor(self._bound.top) do
             --print( string.format("drawing %s, %s", x, y) )
             self:draw_cell( { ["x"] = x, ["y"] = y }, play.environ:get(x,y) )
         end
@@ -112,10 +120,7 @@ function OVERCAM:update_width(width)
     self._width = width
     self._height = self._width / self._ratio
 
-    self._bound.left = math.floor(self._position.x) - math.ceil(self._width) / 2
-    self._bound.right = math.ceil(self._position.x) + math.ceil(self._width) / 2
-    self._bound.top = math.ceil(self._position.y) + math.ceil(self._height) / 2
-    self._bound.bottom = math.floor(self._position.y) - math.ceil(self._height) / 2
+    self:_calc_bounds()
 
     self._cell_wh = love.graphics.getWidth() / self._width
 

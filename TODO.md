@@ -3,6 +3,9 @@ Wrap up states into an eaiser system to manage when adding new states
 
 create a consolidated area for notifications
 
+fix movement overhang bug
+
+figure out how to handle blown full zoom out
 
 figure out a workable way to generate a terrain-realistic random environment
 
