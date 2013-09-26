@@ -7,7 +7,7 @@ local ENVIRON = {}
 
 ENVIRON.__index = ENVIRON
 
-function new(max_x, max_y, build_later)
+function new(max_x, max_y, build_later, env_type)
     tree = octree.new()
 
     local environ = { ["tree"] = tree }
@@ -15,6 +15,9 @@ function new(max_x, max_y, build_later)
     environ._cur_build_y = 0
     environ.max_x = max_x
     environ.max_y = max_y
+    environ.env_type = env_type
+
+
     if build_later == true then
         environ._building = false
     else
@@ -46,8 +49,18 @@ function ENVIRON:get(x, y)
 end
 
 
-function ENVIRON:addrandom(position)
+function ENVIRON:add_random(position)
+    if self.env_type == "complex" then
+        self:add_complex_rand(position)
+    elseif self.env_type == "sugared" then
+        self:add_sugared_rand(position)
+    end
 
+
+
+end
+
+function ENVIRON:add_complex_rand(position)
     local x = position.x
     local y = position.y
 
@@ -72,8 +85,24 @@ function ENVIRON:addrandom(position)
 
     --print( string.format("h: %s", test_ret.height) )
 
+end
+
+function ENVIRON:add_sugared_rand(position)
+    local x = position.x
+    local y = position.y
+
+    local sugar = math.random()
+    local spice = math.random()
+    
+    local env_data = function() return { ["sugar"] = sugar, ["spice"] = spice } end
+    --print("adding: "..x..","..y.." with height "..height)
+
+    self.tree:set(x,y,0,env_data)
 
 end
+
+
+
 
 function ENVIRON:randomize(size)
 
