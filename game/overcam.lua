@@ -104,9 +104,24 @@ end
 function OVERCAM:draw_view()
 
     --print( string.format("position %s, %s bounds of L: %s R: %s T: %s B: %s", self._position.x, self._position.y, self._bound.left, self._bound.right, self._bound.top, self._bound.bottom ) )
+    if ( self._position.x + ( self._width / 2 ) ) > ( self._environ.max_x + 1 )  then
+            self._position.x = ( self._environ.max_x - ( self._width / 2 ) ) + 1
+    end
+
+    if ( self._position.y + ( self._height / 2 ) ) > ( self._environ.max_y + 1 )  then
+            self._position.y = ( self._environ.max_y - ( self._height / 2 ) ) + 1
+    end
+
+    if ( self._position.y - ( self._height / 2 ) ) < 0  then
+            self._position.y = ( 0 + ( self._height / 2 ) )
+    end
+
+    if ( self._position.x - ( self._width / 2 ) ) < 0  then
+            self._position.x = ( 0 + ( self._width / 2 ) )
+    end
 
     for x = math.floor(self._bound.left), math.ceil(self._bound.right) do
-        for y = math.ceil(self._bound.bottom), math.floor(self._bound.top) do
+        for y = math.floor(self._bound.bottom), math.ceil(self._bound.top) do
             --print( string.format("drawing %s, %s", x, y) )
             self:draw_cell( { ["x"] = x, ["y"] = y }, play.environ:get(x,y) )
         end
@@ -133,12 +148,21 @@ end
 function OVERCAM:zoom_out()
 
     local new_width = self._width + self._zoom_speed
+    if new_width > ( self._environ.max_x + 1 ) then
+        new_width = ( self._environ.max_x + 1 )
+    end
+
     self:update_width(new_width)
 
 end
 
 function OVERCAM:zoom_in()
     local new_width = self._width - self._zoom_speed
+    if new_width < 1 then
+        new_width = 1
+    end
+
+
     self:update_width(new_width)
 
 end
@@ -150,8 +174,10 @@ function OVERCAM:update_position(dt)
 
     if love.keyboard.isDown("right") then
         --print("going right")
-        if ( self._position.x + ( self._width / 2 ) ) > self._environ.max_x  then
-            self._position.x = ( self._environ.max_x - ( self._width / 2 ) )
+        --print("%s", ( self._position.x + ( self._width / 2 ) ) )
+
+        if ( self._position.x + ( self._width / 2 ) ) > ( self._environ.max_x + 1 )  then
+            self._position.x = ( self._environ.max_x - ( self._width / 2 ) ) + 1
         else
             self._position.x = self._position.x + 10 * dt
         end
@@ -177,17 +203,14 @@ function OVERCAM:update_position(dt)
 
     if love.keyboard.isDown("down") then
         --print("going right")
-        if ( self._position.y + ( self._height / 2 ) ) > self._environ.max_y  then
-            self._position.y = ( self._environ.max_y - ( self._height / 2 ) )
+        if ( self._position.y + ( self._height / 2 ) ) > ( self._environ.max_y + 1 )  then
+            self._position.y = ( self._environ.max_y - ( self._height / 2 ) ) + 1
         else
             self._position.y = self._position.y + 10 * dt
         end
     end
 
-    self._bound.left = math.floor(self._position.x) - math.ceil(self._width) / 2
-    self._bound.right = math.ceil(self._position.x) + math.ceil(self._width) / 2
-    self._bound.top = math.ceil(self._position.y) + math.ceil(self._height) / 2
-    self._bound.bottom = math.floor(self._position.y) - math.ceil(self._height) / 2
+    self:_calc_bounds()
 
 
 end
