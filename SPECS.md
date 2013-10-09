@@ -1,6 +1,10 @@
 # Specifications
 Raw game notes and specifications.
 
+YOU CANNOT ADD TABLES TO THE OCTREE
+THIS UPSETS THE OCTREE
+WRAP THEM IN FUNCTIONS
+
 
 http://www.colourlovers.com/palette/151113/blue_jay_feather
 

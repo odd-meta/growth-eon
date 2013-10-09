@@ -7,8 +7,8 @@ local environment = require('environment')
 function play.load()
     love.audio.stop()
 
-    play.environ = environment.new(100,100)
-    play.overcam = overcam.new(play.environ, 40, false, "complex")
+    play.environ = environment.new(20,20,false, "complex")
+    play.overcam = overcam.new(play.environ, 40)
     play._c = {}
     play._c.bg = { r = 43, g = 76, b = 126 }
     play._c.font = { r = 243, g = 238, b = 236 }

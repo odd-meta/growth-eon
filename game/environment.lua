@@ -50,6 +50,7 @@ end
 
 
 function ENVIRON:add_random(position)
+    
     if self.env_type == "complex" then
         self:add_complex_rand(position)
     elseif self.env_type == "sugared" then
